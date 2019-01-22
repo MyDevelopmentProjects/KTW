@@ -1,0 +1,73 @@
+<div class="padding">
+    <div class="box">
+        <style>
+            .gallery-img {
+                height: 250px;
+                margin-bottom: 10px;
+                border-left: solid 10px transparent !important;
+                background-repeat: no-repeat !important;
+                background-size: cover !important;
+                background-position: center center !important;
+                position: relative;
+            }
+
+            .gallery-img .overbox {
+                height: 250px;
+                background: #00000080;
+                cursor: pointer;
+                display: none;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+            }
+
+            .gallery-img .overbox > a {
+                color: #FFF;
+                font-weight: bold;
+                font-size: 24px;
+                line-height: 250px;
+                text-align: center;
+            }
+        </style>
+        <div class="table-responsive">
+
+            <div class="row">
+                <section style="padding: 10px; border-left: solid 10px transparent !important;">
+                    <input type="text"
+                           style="width: 500px;"
+                           placeholder="Youtube Video Url"
+                           ng-model="object.videoUrl"
+                           class="form-control" />
+                    <imperio-file-uploader-input></imperio-file-uploader-input>
+
+                    <div class="form-actions">
+                        <div class="col-md-12">
+                            <button type="button" class="btn danger p-x-md" style="float: right;"
+                                    ng-disabled="addEditForm.$invalid"
+                                    ng-click="save()">შენახვა
+                            </button>
+                        </div>
+                    </div>
+
+                </section>
+            </div>
+            <div class="row">
+                <section style="padding: 10px;">
+                    <div class=" col col-md-3 gallery-img"
+                         ng-repeat="item in data.results"
+                         style="background: url(/uploads/{{item.image}});">
+                        <iframe ng-if="item.videoUrl" width="100%" height="250"
+                                ng-src="{{trustSrc(item.videoUrl)}}"
+                                frameborder="0" allow="autoplay; encrypted-media"
+                                allowfullscreen></iframe>
+                        <div class="overbox">
+                            <a class="col col-md-12" href="javascript:void(0)" ng-click="delete(item.id)">წაშლა</a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <!--<td>{{item.videoUrl}}</td>-->
+        </div>
+    </div>
+</div>

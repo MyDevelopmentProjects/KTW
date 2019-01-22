@@ -1,0 +1,414 @@
+<div class="padding">
+    <div class="box">
+        <div class="table-responsive">
+            <imperio-search-input></imperio-search-input>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th imperio-sortable-by="id">#</th>
+                    <th imperio-sortable-by="title">დასახელება</th>
+                    <th imperio-sortable-by="numberOfBoxes">ბოქსების რაოდენობა</th>
+                    <th imperio-sortable-by="enabled">სტატუსი</th>
+                    <th imperio-sortable-by="dateCreated">შექმნის თარიღი</th>
+                    <th>ქმედება</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in data.results">
+                    <td ng-class="{ 'with-no-price': item.prices.length == 0, 'with-no-images': (item.images == '' || item.images == '[]' ) }">
+                        {{item.id}}
+                    </td>
+                    <td>{{item.title}}</td>
+                    <td>{{item.numberOfBoxes}}</td>
+                    <td ng-if="item.enabled == 1">ჩართულია</td>
+                    <td ng-if="item.enabled == 0">გამორთულია</td>
+                    <td ng-bind="item.dateCreated | date:'dd-MM-yyyy'"></td>
+                    <td>
+                        <i class="fa fa-fw fa-pencil" ng-click="showAddEdit(item)"></i>
+                        <i class="fa fa-fw fa-dollar" ng-click="showPricesAddEdit(item)"></i>
+                        <i class="fa fa-fw fa-image" ng-click="showImagesAddEdit(item)"></i>
+                        <i class="fa fa-fw fa-th-list" ng-click="showMgtAddEdit(item)"></i>
+                        <i class="fa fa-fw fa-trash-o" ng-model="item"
+                           ng-popover-confirm="delete({{item.id}})"
+                           data-title="წავშალო ჩანაწერი?">
+                        </i>
+                    </td>
+                </tr>
+                <tr ng-if="!data.results.length" class="text-center">
+                    <td colspan="100" class="warning">ჩანაწერები ვერ მოიძებნა</td>
+                </tr>
+                </tbody>
+                <tfoot class="hide-if-no-paging">
+                <tr>
+                    <td colspan="50" class="text-center">
+                        <imperio-pager></imperio-pager>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <imperio-fab></imperio-fab>
+</div>
+
+<div id="showPricesAddEdit" class="modal black-overlay" data-backdrop="false">
+    <div class="modal-dialog modal-lg" ng-form="priceForm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{object.title}} - ს ფასები</h5>
+            </div>
+            <div class="modal-body p-lg">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>კატეგორია</th>
+                        <th>ფასი</th>
+                        <th>შექმნის თარიღი</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="item in categories">
+                        <td>{{item.title}}</td>
+                        <td>
+                            <input type="text"
+                                   required
+                                   data-cat-id="{{item.id}}"
+                                   data-rec-id="{{getRecId(item.id)}}"
+                                   data-rec-value="{{getPrice(item.id)}}"
+                                   class="form-control inpPrice"/>
+                        </td>
+                        <td ng-bind="item.dateCreated | date:'dd-MM-yyyy'"></td>
+                    </tr>
+                    <tr ng-if="!data.results.length" class="text-center">
+                        <td colspan="100" class="warning">ჩანაწერები ვერ მოიძებნა</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn dark-white p-x-md" data-dismiss="modal">დახურვა</button>
+                <button type="button" class="btn danger p-x-md" ng-disabled="priceForm.$invalid"
+                        ng-click="savePrices()">შენახვა
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="showMgtAddEdit" class="modal black-overlay" data-backdrop="false">
+    <div class="modal-dialog modal-lg" ng-form="mgtForm" style="width: 92%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{object.title}} - მენეჯმენტი</h5>
+            </div>
+            <div class="modal-body p-lg">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>პოზიცია</th>
+                        <th>სახელი, გვარი</th>
+                        <th>მობილური</th>
+                        <th>მეილი</th>
+                        <th>ნოტიფიკაცია</th>
+                        <th>ქმედება</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="item in mgt">
+                        <td><input class="form-control" type="text" ng-model="item.position"></td>
+                        <td><input class="form-control" type="text" ng-model="item.fullName"></td>
+                        <td><input class="form-control" type="text" ng-model="item.mNumber"></td>
+                        <td><input class="form-control" type="text" ng-model="item.email"></td>
+                        <td><input class="form-control" type="checkbox" ng-model="item.receivesNotification"></td>
+                        <td>
+                            <i class="fa fa-fw fa-trash-o" ng-model="item" ng-if="item.id"
+                               ng-popover-confirm="deleteMgt({{item}}, {{$index}})"
+                               data-title="წავშალო ჩანაწერი?">
+                            </i>
+                        </td>
+                    </tr>
+                    <tr ng-if="!data.results.length" class="text-center">
+                        <td colspan="100" class="warning">ჩანაწერები ვერ მოიძებნა</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn dark-white p-x-md" data-dismiss="modal">დახურვა</button>
+                <button type="button" class="btn btn-success" ng-click="addNewMgt()">დამატება</button>
+                <button type="button" class="btn danger p-x-md"
+                        ng-click="saveMgt()">შენახვა
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="showAddEdit" class="modal black-overlay" data-backdrop="false">
+    <div class="modal-dialog modal-lg" ng-form="addEditForm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{init.action}} <span ng-if="init.action == 'რედაქტირება'">
+                - {{object.title}}
+                </span></h5>
+            </div>
+            <div class="modal-body p-lg">
+                <section class="col col-md-6">
+                    <div class="form-group">
+                        <label>დასახელება(ENG)</label>
+                        <input class="form-control" type="text"
+                               placeholder="დასახელება (ENG)"
+                               ng-model="object.title" required>
+                    </div>
+                </section>
+                <section class="col col-md-6">
+                    <div class="form-group">
+                        <label>ოფერის დასახელება</label>
+                        <input class="form-control" type="text"
+                               placeholder="ოფერის დასახელება"
+                               ng-model="object.offerTitle">
+                    </div>
+                </section>
+                <section class="col col-md-4">
+                    <div class="form-group">
+                        <label>სამუშაო საათები(TXT)</label>
+                        <input class="form-control" type="text"
+                               placeholder="სამუშაო საათები(TXT)"
+                               ng-model="object.workingHours" required>
+                    </div>
+                </section>
+                <section class="col col-md-4">
+                    <div class="form-group">
+                        <label>სამუშაო საათი(დასაწყისი)</label>
+                        <input class="form-control" type="number"
+                               placeholder="სამუშაო საათი(დასაწყისი)"
+                               ng-model="object.workingStartHour" required>
+                    </div>
+                </section>
+                <section class="col col-md-4">
+                    <div class="form-group">
+                        <label>სამუშაო საათი(დასასრული)</label>
+                        <input class="form-control" type="number"
+                               placeholder="სამუშაო საათი(დასასრული)"
+                               ng-model="object.workingEndHour" required>
+                    </div>
+                </section>
+                <section class="col col-md-3">
+                    <div class="form-group">
+                        <label>ბოქსების(#)</label>
+                        <input type="number" class="form-control"
+                               placeholder="ბოქსების #"
+                               ng-model="object.numberOfBoxes" required>
+                    </div>
+                </section>
+                <section class="col col-md-3">
+                    <div class="form-group">
+                        <label>რუკის მისამართი(LAT)</label>
+                        <input type="text" class="form-control"
+                               placeholder="რუკის მისამართი(LAT)"
+                               ng-model="object.lat">
+                    </div>
+                </section>
+                <section class="col col-md-3">
+                    <div class="form-group">
+                        <label>რუკის მისამართი(LNG)</label>
+                        <input type="text" class="form-control"
+                               placeholder="რუკის მისამართი(LNG)"
+                               ng-model="object.lng">
+                    </div>
+                </section>
+                <section class="col col-md-3">
+                    <div class="form-group">
+                        <label>ჩართულია</label>
+                        <input type="checkbox" class="form-control" ng-model="object.enabled">
+                    </div>
+                </section>
+                <section class="col col-md-6">
+                    <div class="form-group">
+                        <label>ქალაქი</label>
+                        <select class="form-control"
+                                ng-model="district.city.id" ng-change="getListOfDistrict()"
+                                ng-options="item.id as item.title for item in city_list">
+                            <option value='' selected="selected">- აირჩიეთ ქალაქი -</option>
+                        </select>
+                    </div>
+                </section>
+                <section class="col col-md-6">
+                    <div class="form-group">
+                        <label>რაიონი</label>
+                        <select class="form-control"
+                                ng-model="object.district.id"
+                                ng-options="item.id as item.title for item in districts" required>
+                            <option value='' selected="selected">- აირჩიეთ რაიონი -</option>
+                        </select>
+                    </div>
+                </section>
+                <section class="col col-md-6">
+                    <div class="form-group">
+                        <label>მისამართი</label>
+                        <input type="text" class="form-control" ng-model="object.address" required>
+                    </div>
+                </section>
+                <section class="col col-md-6">
+                    <div class="form-group">
+                        <label>მისამართი(SMS)</label>
+                        <input type="text" class="form-control" ng-model="object.addressEn" required>
+                    </div>
+                </section>
+                <section class="col col-md-12" ng-if="object && services.length > 0">
+                    <div class="form-group">
+                        <label>სერვისები</label>
+                        <isteven-multi-select
+                                input-model="_services"
+                                output-model="_outServ"
+                                button-label="title"
+                                item-label="title"
+                                tick-property="isSelected">
+                        </isteven-multi-select>
+                    </div>
+                </section>
+                <div style="clear: both;"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn dark-white p-x-md" data-dismiss="modal">დახურვა</button>
+                <button type="button" class="btn danger p-x-md"
+                        ng-click="save()">შენახვა
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="showImagesAddEdit" class="modal black-overlay" data-backdrop="false">
+    <div class="modal-dialog modal-lg" ng-form="imgForm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{object.title}} - ს ფოტოები</h5>
+            </div>
+            <div class="modal-body p-lg">
+                <div ng-repeat="img in fileArr" style="margin: 4px;">
+                    <img ng-if="img.includes('http')" ng-src="{{img}}" width="120"/>
+                    <img ng-if="!img.includes('http')" ng-src="uploads/{{img}}" width="120"/>
+                    <a href="javascript:void(0)" ng-click="removeImage($index)">წაშლა</a>
+                </div>
+                <div>
+                    <imperio-file-uploader-input-multiple class="uplMult"></imperio-file-uploader-input-multiple>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn dark-white p-x-md" data-dismiss="modal">დახურვა</button>
+                <button type="button" class="btn danger p-x-md" ng-disabled="imgForm.$invalid"
+                        ng-click="saveLazyMult()">შენახვა
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="showAddress" class="modal black-overlay" data-backdrop="false">
+    <div class="modal-dialog modal-lg" ng-form="addEditForm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{init.action}}</h5>
+            </div>
+            <div class="modal-body p-lg">
+                <div class="b-b b-primary nav-active-primary">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="" data-toggle="tab" data-target="#tab-georgian"
+                               aria-expanded="false">ქართული</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="" data-toggle="tab"
+                               data-target="#tab-english" aria-expanded="true">English</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="" data-toggle="tab"
+                               data-target="#tab-russian" aria-expanded="true">Russian</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-content p-a m-b-md">
+                    <div class="tab-pane nav-active-primary active" id="tab-georgian"
+                         aria-expanded="false">
+                        <section>
+                            <div class="form-group">
+                                <label>სათაური ქართულად: </label>
+                                <input class="form-control rounded" required type="text" placeholder="სათაური ქართულად"
+                                       ng-model="object.translation.titleGE">
+                            </div>
+                        </section>
+                        <section>
+                            <div class="form-group">
+                                <label>მისამართი ქართულად: </label>
+                                <input class="form-control rounded" type="text" required placeholder="ფილიალის მისამართი"
+                                       ng-model="object.branchGE">
+                            </div>
+                        </section>
+                    </div>
+                    <div class="tab-pane nav-active-primary" id="tab-english"
+                         aria-expanded="false">
+                        <section>
+                            <div class="form-group">
+                                <label>სათაური ინგლისურად: </label>
+                                <input class="form-control rounded" required type="text" placeholder="სათაური ინგლისურად"
+                                       ng-model="object.translation.titleEN">
+                            </div>
+                        </section>
+                        <section>
+                            <div class="form-group">
+                                <label>მისამართი ინგლისურად: </label>
+                                <input class="form-control rounded" type="text" required placeholder="ფილიალის მისამართი"
+                                       ng-model="object.branchEN">
+                            </div>
+                        </section>
+                    </div>
+                    <div class="tab-pane nav-active-primary" id="tab-russian"
+                         aria-expanded="false">
+                        <section>
+                            <div class="form-group">
+                                <label>სათაური რუსულად: </label>
+                                <input class="form-control rounded" required type="text" placeholder="სათაური რუსულად"
+                                       ng-model="object.translation.titleRU">
+                            </div>
+                        </section>
+                        <section>
+                            <div class="form-group">
+                                <label>მისამართი რუსულად: </label>
+                                <input class="form-control rounded" type="text" required placeholder="ფილიალის მისამართი"
+                                       ng-model="object.branchRU">
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <section>
+                    <div class="form-group">
+                        <label>გრძედი: </label>
+                        <input class="form-control rounded" type="text" required placeholder="გრძედი"
+                               ng-model="object.lat">
+                    </div>
+                </section>
+                <section>
+                    <div class="form-group">
+                        <label>განედი: </label>
+                        <input class="form-control rounded" type="text" required placeholder="განედი"
+                               ng-model="object.lon">
+                    </div>
+                </section>
+                <section>
+                    <div class="form-group">
+                        <label>სამუშაო საათები: </label>
+                        <input class="form-control rounded" type="text" required placeholder="სამუშაო საათები"
+                               ng-model="object.workingHours">
+                    </div>
+                </section>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn dark-white p-x-md" data-dismiss="modal">დახურვა</button>
+                <button type="button" class="btn danger p-x-md" ng-disabled="addEditForm.$invalid"
+                        ng-click="save()">შენახვა
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,17 @@
+<svg width="40" height="40" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<title>ic_slide-arrow_right_wt</title>
+<desc>Created using Figma</desc>
+<g id="Canvas" transform="translate(591 404)">
+<clipPath id="clip-0" clip-rule="evenodd">
+<path d="M -591 -404L -551 -404L -551 -364L -591 -364L -591 -404Z" fill="#FFFFFF"/>
+</clipPath>
+<g id="ic_slide-arrow_right_wt" clip-path="url(#clip-0)">
+<g id="Vector 4">
+<use xlink:href="#path0_stroke" transform="translate(-578 -398)" fill="#FFFFFF"/>
+</g>
+</g>
+</g>
+<defs>
+<path id="path0_stroke" d="M 14 14L 14.3536 14.3536L 14.7071 14L 14.3536 13.6464L 14 14ZM -0.353553 0.353553L 13.6464 14.3536L 14.3536 13.6464L 0.353553 -0.353553L -0.353553 0.353553ZM 13.6464 13.6464L -0.353553 27.6464L 0.353553 28.3536L 14.3536 14.3536L 13.6464 13.6464Z"/>
+</defs>
+</svg>

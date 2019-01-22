@@ -1,0 +1,123 @@
+<div class="padding">
+    <div class="box"  ng-form="addEditForm"  uploader="uploader">
+        <form style="padding:30px">
+            <fieldset>
+                <legend>
+                    ჩვენ შესახებ რედაქტირება
+                </legend>
+            </fieldset>
+            <hr>
+            <fieldset>
+                <div class="row" ng-if="data.image">
+                    <img ng-src="/uploads/{{data.image}}" height="100">
+                </div>
+                <div class="row">
+                    <imperio-file-uploader-input></imperio-file-uploader-input>
+                </div>
+                <div class="row">
+                    <div class="b-b b-primary nav-active-primary">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="" data-toggle="tab" data-target="#tab-georgian"
+                                   aria-expanded="false">ქართული</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="" data-toggle="tab"
+                                   data-target="#tab-english" aria-expanded="true">English</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="" data-toggle="tab"
+                                   data-target="#tab-russian" aria-expanded="true">Russia</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="" data-toggle="tab"
+                                   data-target="#tab-ch" aria-expanded="true">China</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-content p-a m-b-md">
+                        <div class="tab-pane nav-active-primary active" id="tab-georgian"
+                             aria-expanded="false">
+                            <section class="col col-md-12">
+                                <div class="form-group">
+                                    <label>დასახელება </label>
+                                    <input class="form-control" ng-model="data.translation.titleKA" placeholder="დასახელება">
+                                </div>
+                            </section>
+                            <section class="col col-md-12">
+                                <div class="form-group">
+                                    <label>აღწერა ქართულად: </label>
+                                    <summernote config="options"
+                                                on-image-upload="imageUploadGE(files, editor)"
+                                                editable="editableRU" ng-model="data.translation.descriptionKA"></summernote>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="tab-pane nav-active-primary" id="tab-english"
+                             aria-expanded="true">
+                            <section class="col col-md-12">
+                                <div class="form-group">
+                                    <label>დასახელება </label>
+                                    <input class="form-control" ng-model="data.translation.titleEN" placeholder="დასახელება">
+                                </div>
+                            </section>
+                            <section class="col col-md-12">
+                                <div class="form-group">
+                                    <label>აღწერა ინგლისურად: </label>
+                                    <summernote config="options"
+                                                on-image-upload="imageUploadEN(files, editor)"
+                                                editable="editableEN" ng-model="data.translation.descriptionEN"></summernote>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="tab-pane nav-active-primary" id="tab-russian"
+                             aria-expanded="true">
+                            <section class="col col-md-12">
+                                <div class="form-group">
+                                    <label>დასახელება </label>
+                                    <input class="form-control" ng-model="data.translation.titleRU" placeholder="დასახელება">
+                                </div>
+                            </section>
+                            <section class="col col-md-12">
+                                <div class="form-group">
+                                    <label>აღწერა რუსულად: </label>
+                                    <summernote config="options"
+                                                on-image-upload="imageUploadRU(files, editor)"
+                                                editable="editableEN" ng-model="data.translation.descriptionRU"></summernote>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="tab-pane nav-active-primary" id="tab-ch"
+                             aria-expanded="true">
+                            <section class="col col-md-12">
+                                <div class="form-group">
+                                    <label>დასახელება </label>
+                                    <input class="form-control" ng-model="data.translation.titleCH" placeholder="დასახელება">
+                                </div>
+                            </section>
+                            <section class="col col-md-12">
+                                <div class="form-group">
+                                    <label>აღწერა ჩინურად: </label>
+                                    <summernote config="options"
+                                                on-image-upload="imageUploadCH(files, editor)"
+                                                editable="editableCH" ng-model="data.translation.descriptionCH"></summernote>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <hr>
+            <div class="form-actions">
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="button" class="btn danger p-x-md" style="float: right;"
+                                ng-disabled="addEditForm.$invalid"
+                                ng-click="save()">შენახვა
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

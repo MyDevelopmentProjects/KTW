@@ -1,0 +1,426 @@
+<div class="padding">
+    <div class="box">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>კატეგორია</th>
+                    <th>დასახელება</th>
+                    <th>ლიტრაჟი</th>
+                    <th>ქმედება</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in data.results">
+                    <td>{{item.id}}</td>
+                    <td>{{item.category.translation.titleEN}}</td>
+                    <td>{{item.translation.titleEN}}</td>
+                    <td>{{item.capacity}}</td>
+                    <td>
+                        <i class="fa fa-fw fa-pencil" ng-click="showAddEdit(item)"></i>
+                        <i class="fa fa-fw fa-trash-o" ng-model="item"
+                           ng-popover-confirm="delete({{item.id}})"
+                           data-title="წავშალო ჩანაწერი?">
+                        </i>
+                    </td>
+                </tr>
+                <tr ng-if="!data.results.length" class="text-center">
+                    <td colspan="100" class="warning">ჩანაწერები ვერ მოიძებნა</td>
+                </tr>
+                </tbody>
+                <tfoot class="hide-if-no-paging">
+                <tr>
+                    <td colspan="50" class="text-center">
+                        <imperio-pager></imperio-pager>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <imperio-fab></imperio-fab>
+</div>
+
+<div id="showAddEdit" class="modal black-overlay" data-backdrop="false">
+    <div class="modal-dialog modal-lg" ng-form="addEditForm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{init.action}}</h5>
+            </div>
+            <div class="modal-body p-lg">
+
+                <div class="b-b b-primary nav-active-primary">
+                    <ul class="nav nav-tabs">
+
+                        <li class="nav-item">
+                            <a class="nav-link active"
+                               href=""
+                               data-toggle="tab"
+                               data-target="#tab-main"
+                               aria-expanded="false">მთავარი</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link"
+                               href=""
+                               data-toggle="tab"
+                               data-target="#tab-media"
+                               aria-expanded="true">ფოტო & ფაილები</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link"
+                               href=""
+                               data-toggle="tab"
+                               data-target="#tab-texts"
+                               aria-expanded="true">ტექსტები</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link"
+                               href=""
+                               data-toggle="tab"
+                               data-target="#tab-top"
+                               aria-expanded="true">TOP</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="tab-content p-a m-b-md">
+                    <div class="tab-pane nav-active-primary active" id="tab-main"
+                         aria-expanded="false">
+                        <section>
+                            <div class="form-group">
+                                <label>კატეგორია</label>
+                                <select class="form-control"
+                                        ng-model="object.category.id"
+                                        ng-options="item.id as item.translation.titleEN for item in categories">
+                                    <option value='' selected="selected">- აირჩიეთ კატეგორია -</option>
+                                </select>
+                            </div>
+                        </section>
+                        <section>
+                            <div class="form-group">
+                                <label>სათაური ინგლისურად: </label>
+                                <input class="form-control rounded" required type="text"
+                                       placeholder="სათაური ინგლისურად"
+                                       ng-model="object.translation.titleEN">
+                            </div>
+                        </section>
+                        <section>
+                            <div class="form-group">
+                                <label>სათაური რუსულად: </label>
+                                <input class="form-control rounded" required type="text" placeholder="სათაური რუსულად"
+                                       ng-model="object.translation.titleRU">
+                            </div>
+                        </section>
+                        <section>
+                            <div class="form-group">
+                                <label>სათაური ჩინურად: </label>
+                                <input class="form-control rounded" required type="text" placeholder="სათაური ჩინურად"
+                                       ng-model="object.translation.titleCH">
+                            </div>
+                        </section>
+                        <section>
+                            <div class="form-group">
+                                <label>სათაური ქართულად: </label>
+                                <input class="form-control rounded" required type="text"
+                                       placeholder="სათაური ქართულად"
+                                       ng-model="object.translation.titleGR">
+                            </div>
+                        </section>
+                        <hr />
+
+                        <section>
+                            <div class="form-group">
+                                <label>Region EN: </label>
+                                <input class="form-control rounded" required type="text" placeholder="Region"
+                                       ng-model="object.region">
+                            </div>
+                        </section>
+                        <section>
+                            <div class="form-group">
+                                <label>Region RU: </label>
+                                <input class="form-control rounded" required type="text" placeholder="Region"
+                                       ng-model="object.regionRU">
+                            </div>
+                        </section>
+                        <section>
+                            <div class="form-group">
+                                <label>Region CH: </label>
+                                <input class="form-control rounded" required type="text" placeholder="Region"
+                                       ng-model="object.regionCH">
+                            </div>
+                        </section>
+                        <section>
+                            <div class="form-group">
+                                <label>Region KA: </label>
+                                <input class="form-control rounded" required type="text" placeholder="Region"
+                                       ng-model="object.regionGR">
+                            </div>
+                        </section>
+
+
+                        <hr />
+
+                        <section>
+                            <div class="form-group">
+                                <label>Grape EN: </label>
+                                <input class="form-control rounded" required type="text" placeholder="Grape"
+                                       ng-model="object.grape">
+                            </div>
+                        </section>
+                        <section>
+                            <div class="form-group">
+                                <label>Grape RU: </label>
+                                <input class="form-control rounded" required type="text" placeholder="Grape"
+                                       ng-model="object.grapeRU">
+                            </div>
+                        </section>
+                        <section>
+                            <div class="form-group">
+                                <label>Grape CH: </label>
+                                <input class="form-control rounded" required type="text" placeholder="Grape"
+                                       ng-model="object.grapeCH">
+                            </div>
+                        </section>
+                        <section>
+                            <div class="form-group">
+                                <label>Grape KA: </label>
+                                <input class="form-control rounded" required type="text" placeholder="Grape"
+                                       ng-model="object.grapeGR">
+                            </div>
+                        </section>
+
+
+
+                        <section>
+                            <div class="form-group">
+                                <label>Alcohol EN: </label>
+                                <input class="form-control rounded" required type="text" placeholder="Alcohol"
+                                       ng-model="object.alcohol">
+                            </div>
+                        </section>
+                        <section>
+                            <div class="form-group">
+                                <label>Alcohol RU: </label>
+                                <input class="form-control rounded" required type="text" placeholder="Alcohol"
+                                       ng-model="object.alcoholRU">
+                            </div>
+                        </section>
+                        <section>
+                            <div class="form-group">
+                                <label>Alcohol CH: </label>
+                                <input class="form-control rounded" required type="text" placeholder="Alcohol"
+                                       ng-model="object.alcoholCH">
+                            </div>
+                        </section>
+                        <section>
+                            <div class="form-group">
+                                <label>Alcohol KA: </label>
+                                <input class="form-control rounded" required type="text" placeholder="Alcohol"
+                                       ng-model="object.alcoholGR">
+                            </div>
+                        </section>
+
+                        <hr />
+
+                        <section>
+                            <div class="form-group">
+                                <label>Storage EN: </label>
+                                <input class="form-control rounded" required type="text" placeholder="Storage"
+                                       ng-model="object.sugar">
+                            </div>
+                        </section>
+                        <section>
+                            <div class="form-group">
+                                <label>Storage RU: </label>
+                                <input class="form-control rounded" required type="text" placeholder="Storage"
+                                       ng-model="object.sugarRU">
+                            </div>
+                        </section>
+                        <section>
+                            <div class="form-group">
+                                <label>Storage CH: </label>
+                                <input class="form-control rounded" required type="text" placeholder="Storage"
+                                       ng-model="object.sugarCH">
+                            </div>
+                        </section>
+                        <section>
+                            <div class="form-group">
+                                <label>Storage KA: </label>
+                                <input class="form-control rounded" required type="text" placeholder="Storage"
+                                       ng-model="object.sugarGR">
+                            </div>
+                        </section>
+
+                        <hr />
+
+                        <section>
+                            <div class="form-group">
+                                <label>Type EN: </label>
+                                <input class="form-control rounded" required type="text" placeholder="Type"
+                                       ng-model="object.gtype">
+                            </div>
+                        </section>
+                        <section>
+                            <div class="form-group">
+                                <label>Type RU: </label>
+                                <input class="form-control rounded" required type="text" placeholder="Type"
+                                       ng-model="object.gtypeRU">
+                            </div>
+                        </section>
+                        <section>
+                            <div class="form-group">
+                                <label>Type CH: </label>
+                                <input class="form-control rounded" required type="text" placeholder="Type"
+                                       ng-model="object.gtypeCH">
+                            </div>
+                        </section>
+                        <section>
+                            <div class="form-group">
+                                <label>Type KA: </label>
+                                <input class="form-control rounded" required type="text" placeholder="Type"
+                                       ng-model="object.gtypeGR">
+                            </div>
+                        </section>
+
+
+
+
+                        <hr />
+
+                        <section>
+                            <div class="form-group">
+                                <label>Capacity EN: </label>
+                                <input class="form-control rounded" required type="text" placeholder="Capacity"
+                                       ng-model="object.capacity">
+                            </div>
+                        </section>
+                        <section>
+                            <div class="form-group">
+                                <label>Capacity RU: </label>
+                                <input class="form-control rounded" required type="text" placeholder="Capacity"
+                                       ng-model="object.capacityRU">
+                            </div>
+                        </section>
+                        <section>
+                            <div class="form-group">
+                                <label>Capacity CH: </label>
+                                <input class="form-control rounded" required type="text" placeholder="Capacity"
+                                       ng-model="object.capacityCH">
+                            </div>
+                        </section>
+                        <section>
+                            <div class="form-group">
+                                <label>Capacity KA: </label>
+                                <input class="form-control rounded" required type="text" placeholder="Capacity"
+                                       ng-model="object.capacityGR">
+                            </div>
+                        </section>
+
+
+
+                    </div>
+
+
+                    <div class="tab-pane nav-active-primary" id="tab-media" aria-expanded="false">
+                        <section>
+                            <label>ფოტოები</label>
+                            <imperio-file-uploader-input-multiple
+                                    class="uplMult"></imperio-file-uploader-input-multiple>
+                            <br/>
+                            <div ng-repeat="item in fileArr">
+                                <a href="uploads/{{item}}" target="_blank">{{item}}</a>
+                                <a href="javascript:void(0)"
+                                   ng-click="removeFile(fileArr.indexOf(item))"><b>&nbsp;წაშლა&nbsp;</b></a>
+                            </div>
+                        </section>
+                    </div>
+
+
+                    <div class="tab-pane nav-active-primary" id="tab-top"
+                         aria-expanded="false">
+                        <section>
+                            <div class="form-group">
+                                <label>ტოპ ინგლისურად: </label>
+                                <textarea class="form-control" required
+                                          placeholder="ტექსტი ინგლისურად"
+                                          ng-model="object.translation.descriptionEN"></textarea>
+                            </div>
+                        </section>
+                        <section>
+                            <div class="form-group">
+                                <label>ტოპ რუსულად: </label>
+                                <textarea class="form-control" required
+                                          placeholder="ტექსტი რუსულად"
+                                          ng-model="object.translation.descriptionRU"></textarea>
+                            </div>
+                        </section>
+                        <section>
+                            <div class="form-group">
+                                <label>ტოპ ჩინურად: </label>
+                                <textarea class="form-control" required
+                                          placeholder="ტექსტი ჩინურად"
+                                          ng-model="object.translation.descriptionCH"></textarea>
+                            </div>
+                        </section>
+
+                        <section>
+                            <div class="form-group">
+                                <label>ტოპ ქართულად:</label>
+                                <textarea class="form-control" required
+                                          placeholder="ტექსტი ქართულად"
+                                          ng-model="object.translation.descriptionGR"></textarea>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="tab-pane nav-active-primary" id="tab-texts"
+                         aria-expanded="false">
+                        <section>
+                            <div class="form-group">
+                                <label>ტექსტი ინგლისურად: </label>
+                                <textarea class="form-control" required
+                                          placeholder="ტექსტი ინგლისურად"
+                                          ng-model="object.aboutWineEN"></textarea>
+                            </div>
+                        </section>
+                        <section>
+                            <div class="form-group">
+                                <label>ტექსტი რუსულად: </label>
+                                <textarea class="form-control" required
+                                          placeholder="ტექსტი რუსულად"
+                                          ng-model="object.aboutWineRU"></textarea>
+                            </div>
+                        </section>
+                        <section>
+                            <div class="form-group">
+                                <label>ტექსტი ჩინურად: </label>
+                                <textarea class="form-control" required
+                                          placeholder="ტექსტი ჩინურად"
+                                          ng-model="object.aboutWineCH"></textarea>
+                            </div>
+                        </section>
+
+                        <section>
+                            <div class="form-group">
+                                <label>ტექსტი ქართულად:</label>
+                                <textarea class="form-control" required
+                                          placeholder="ტექსტი ქართულად"
+                                          ng-model="object.aboutWineGR"></textarea>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn dark-white p-x-md" data-dismiss="modal">დახურვა</button>
+                <button type="button" class="btn danger p-x-md" ng-disabled="addEditForm.$invalid"
+                        ng-click="save()">შენახვა
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

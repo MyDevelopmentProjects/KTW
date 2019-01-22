@@ -1,0 +1,158 @@
+<div class="padding">
+    <div class="box">
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-12" ng-form="filterForm">
+                    <h2>ტრანზაქციის ფილტრი</h2>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>თარიღი დან: </label>
+                                <input class="form-control"
+                                       placeholder="წელი-თვ-დღ"
+                                       ng-model="object.dateFrom"
+                                       imperio-datepicker
+                                       ng-disabled="object.transactionId.length > 0"
+                                       ng-required="!object.transactionId"/>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>თარიღი დან: </label>
+                                <input class="form-control"
+                                       placeholder="წელი-თვ-დღ"
+                                       ng-model="object.dateTo"
+                                       imperio-datepicker
+                                       ng-disabled="object.transactionId.length > 0"
+                                       ng-required="!object.transactionId"/>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>სტატუსი: </label>
+                                <select class="form-control c-select"
+                                        ng-model="object.status"
+                                        ng-options="item.id as item.name for item in transactionList">
+                                    <option value='' selected="selected">- აირჩიეთ სტატუსი - </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>სამრეცხაო: </label>
+                                <select class="form-control c-select"
+                                        ng-model="object.laundryId"
+                                        ng-options="item.id as item.title for item in laundryList">
+                                    <option value='' selected="selected">- აირჩიეთ სამრეცხაო - </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="pull-right">
+                                <button type="button" class="btn danger p-x-md" ng-disabled="filterForm.$invalid"
+                                        ng-click="filter()">ძებნა
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="padding" ng-show="data.results.length > 0">
+    <div class="box">
+
+        <div class="table-responsive">
+
+
+            <div style="cursor: pointer; display: none;
+            padding: 10px;
+            font-size: 30px;
+            color: green;
+            float: left;" ng-click="exportData()">
+                <i class="fa fa-file-excel-o"></i>
+            </div>
+
+            <imperio-search-input></imperio-search-input>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th imperio-sortable-by="id">
+                        #
+                    </th>
+                    <th imperio-sortable-by="laundry.id">
+                        სამრეცხაო
+                    </th>
+                    <th imperio-sortable-by="mobileUser.mobileNumber">
+                        მომხმარებელი
+                    </th>
+                    <th imperio-sortable-by="car.carNumber">
+                        ავტომობილი
+                    </th>
+                    <th imperio-sortable-by="status">
+                        სტატუსი
+                    </th>
+                    <th imperio-sortable-by="orderDate">
+                        ორდერის დრო
+                    </th>
+                    <th imperio-sortable-by="dateCreated">
+                        შეიქმნა
+                    </th>
+                    <th>
+                        BANK_RESP_ID
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in data.results">
+                    <td>{{item.id}}</td>
+                    <td>{{item.laundry.title}}</td>
+                    <td>{{item.mobileUser.mobileNumber}}</td>
+                    <td>{{item.car.carNumber}}</td>
+                    <td ng-if="item.status == 0">დასრულებული</td>
+                    <td ng-if="item.status == 1 || item.status == 3">წარუმატებელი</td>
+                    <td ng-bind="item.orderDate | date:'dd-MM-yyyy'"></td>
+                    <td ng-bind="item.dateCreated | date:'dd-MM-yyyy'"></td>
+                    <td>{{item.bankResponse}}</td>
+                </tr>
+                <tr ng-if="!data.results.length" class="text-center">
+                    <td colspan="100" class="warning">ჩანაწერები ვერ მოიძებნა</td>
+                </tr>
+                </tbody>
+                <tfoot class="hide-if-no-paging">
+                <tr>
+                    <td colspan="50" class="text-center">
+                        <imperio-pager></imperio-pager>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<div id="showInvoice" class="modal black-overlay" data-backdrop="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">ტრანზაქციის ნომერი - {{obj.transactionId}}</h5>
+            </div>
+            <div class="modal-body p-lg">
+                <h5>შეკვეთის ნომერი:{{obj.transactionId}}</h5>
+                <h5>თანხა:$ {{obj.amount}}</h5>
+                <h5>გადახდის მეთოდი:$ {{obj.type}}</h5>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn dark-white p-x-md" data-dismiss="modal">დახურვა</button>
+            </div>
+        </div>
+    </div>
+</div>

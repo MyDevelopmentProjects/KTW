@@ -1,0 +1,191 @@
+<div class="padding">
+    <div class="box">
+        <div class="table-responsive">
+            <imperio-search-input></imperio-search-input>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th imperio-sortable-by="id">#</th>
+                    <th>Title</th>
+                    <th>DateCreated</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in data.results">
+                    <td>{{item.id}}</td>
+                    <td>{{item.translation.titleKA}}</td>
+                    <td ng-bind="item.dateCreated | date:'dd-MM-yyyy hh:mm'"></td>
+                    <td>
+                        <i class="fa fa-fw fa-pencil" ng-click="showAddEdit(item)"></i>
+                        <i class="fa fa-fw fa-trash-o" ng-model="item"
+                           ng-popover-confirm="delete({{item.id}})"
+                           data-title="Do you want to delete record??">
+                        </i>
+                    </td>
+                </tr>
+                <tr ng-if="!data.results.length" class="text-center">
+                    <td colspan="100" class="warning">No Records Found</td>
+                </tr>
+                </tbody>
+                <tfoot class="hide-if-no-paging">
+                <tr>
+                    <td colspan="50" class="text-center">
+                        <imperio-pager></imperio-pager>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <imperio-fab></imperio-fab>
+</div>
+
+<div id="showAddEdit" class="modal black-overlay" data-backdrop="false">
+    <div class="modal-dialog modal-lg"
+         ng-form="addEditForm"
+         uploader="uploader"
+         style="width: 100%;margin: 0 !important;height: 100% !important;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{init.action}}</h5>
+            </div>
+            <div class="modal-body p-lg">
+                <fieldset>
+                    <div class="row" ng-if="fileArr">
+                        <section style="padding: 10px;">
+                            <div class=" col col-md-3 gallery-img"
+                                 ng-repeat="item in fileArr"
+                                 style="background: url(/uploads/{{item}});">
+                                <div class="overbox">
+                                    <a class="col col-md-12" href="javascript:void(0)" ng-click="removeImage($index)">წაშლა</a>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="row">
+                        <imperio-file-uploader-input-multiple class="uplMult"></imperio-file-uploader-input-multiple>
+                    </div>
+                    <div class="row">
+                        <section class="col col-md-2">
+                            <div class="form-group">
+                                <label>ფასი($): </label>
+                                <input class="form-control" ng-model="object.price" placeholder="დასახელება ქართულად">
+                            </div>
+                        </section>
+                        <section class="col col-md-3">
+                            <div class="form-group">
+                                <label>Youtube: </label>
+                                <input class="form-control" type="text" ng-model="object.videoUrl" placeholder="Youtube URL">
+                            </div>
+                        </section>
+                    </div>
+                    <div class="row">
+                        <div class="b-b b-primary nav-active-primary">
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="" data-toggle="tab" data-target="#tab-georgian"
+                                       aria-expanded="false">ქართული</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="" data-toggle="tab"
+                                       data-target="#tab-english" aria-expanded="true">English</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="" data-toggle="tab"
+                                       data-target="#tab-russian" aria-expanded="true">Russia</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="" data-toggle="tab"
+                                       data-target="#tab-ch" aria-expanded="true">China</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="tab-content p-a m-b-md">
+                            <div class="tab-pane nav-active-primary active" id="tab-georgian"
+                                 aria-expanded="false">
+                                <section class="col col-md-12">
+                                    <div class="form-group">
+                                        <label>დასახელება ქართულად: </label>
+                                        <input class="form-control" ng-model="object.translation.titleKA" placeholder="დასახელება ქართულად">
+                                    </div>
+                                </section>
+                                <section class="col col-md-12">
+                                    <div class="form-group">
+                                        <label>აღწერა ქართულად: </label>
+                                        <summernote config="options"
+                                                    on-image-upload="imageUploadGE(files, editor)"
+                                                    editable="editableKA"
+                                                    ng-model="object.translation.descriptionKA"></summernote>
+                                    </div>
+                                </section>
+                            </div>
+                            <div class="tab-pane nav-active-primary" id="tab-english"
+                                 aria-expanded="true">
+                                <section class="col col-md-12">
+                                    <div class="form-group">
+                                        <label>დასახელება ინგლისურად: </label>
+                                        <input class="form-control" ng-model="object.translation.titleEN" placeholder="დასახელება ინგლისურად">
+                                    </div>
+                                </section>
+                                <section class="col col-md-12">
+                                    <div class="form-group">
+                                        <label>აღწერა ინგლისურად: </label>
+                                        <summernote config="options"
+                                                    on-image-upload="imageUploadEN(files, editor)"
+                                                    editable="editableEN"
+                                                    ng-model="object.translation.descriptionEN"></summernote>
+                                    </div>
+                                </section>
+                            </div>
+                            <div class="tab-pane nav-active-primary" id="tab-russian"
+                                 aria-expanded="true">
+                                <section class="col col-md-12">
+                                    <div class="form-group">
+                                        <label>დასახელება რუსულად: </label>
+                                        <input class="form-control" ng-model="object.translation.titleRU" placeholder="დასახელება რუსულად">
+                                    </div>
+                                </section>
+                                <section class="col col-md-12">
+                                    <div class="form-group">
+                                        <label>აღწერა რუსულად: </label>
+                                        <summernote config="options"
+                                                    on-image-upload="imageUploadRU(files, editor)"
+                                                    editable="editableRU"
+                                                    ng-model="object.translation.descriptionRU"></summernote>
+                                    </div>
+                                </section>
+                            </div>
+                            <div class="tab-pane nav-active-primary" id="tab-ch"
+                                 aria-expanded="true">
+                                <section class="col col-md-12">
+                                    <div class="form-group">
+                                        <label>დასახელება ჩინურად: </label>
+                                        <input class="form-control" ng-model="object.translation.titleCH" placeholder="დასახელება ჩინურად">
+                                    </div>
+                                </section>
+                                <section class="col col-md-12">
+                                    <div class="form-group">
+                                        <label>აღწერა ჩინურად: </label>
+                                        <summernote config="options"
+                                                    on-image-upload="imageUploadCH(files, editor)"
+                                                    editable="editableCH"
+                                                    ng-model="object.translation.descriptionCH"></summernote>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn dark-white p-x-md" data-dismiss="modal">Close</button>
+                <button type="button" class="btn danger p-x-md" ng-disabled="addEditForm.$invalid"
+                        ng-click="save()">Save
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

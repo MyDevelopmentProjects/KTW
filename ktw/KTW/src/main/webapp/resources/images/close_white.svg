@@ -1,0 +1,22 @@
+<svg width="24" height="24" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<title>close_white</title>
+<desc>Created using Figma</desc>
+<g id="Canvas" transform="translate(-2029 721)">
+<clipPath id="clip-0" clip-rule="evenodd">
+<path d="M 2029 -721L 2053 -721L 2053 -697L 2029 -697L 2029 -721Z" fill="#FFFFFF"/>
+</clipPath>
+<g id="close_white" clip-path="url(#clip-0)">
+<g id="Group">
+<g id="Line 11">
+<use xlink:href="#path0_stroke" transform="matrix(0.708506 -0.705705 0.708506 0.705705 2030.92 -698)" fill="#FFFFFF"/>
+</g>
+<g id="Line 11">
+<use xlink:href="#path0_stroke" transform="matrix(0.708506 0.705705 -0.708506 0.705705 2030 -719)" fill="#FFFFFF"/>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<path id="path0_stroke" d="M 0 -5.55112e-17L 29.7575 -5.55112e-17L 29.7575 -1L 0 -1L 0 -5.55112e-17Z"/>
+</defs>
+</svg>

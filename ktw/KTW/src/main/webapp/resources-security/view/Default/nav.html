@@ -1,0 +1,51 @@
+<ul class="nav" ng-if="$root.loggedIn" ui-nav>
+    <li class="nav-header hidden-folded">
+        <small class="text-muted">მენეჯმენტი</small>
+    </li>
+    <li ui-sref-active="active">
+        <a ui-sref="app.dashboard">
+            <span class="nav-icon"><i class="fa fa-home" aria-hidden="true"></i></span>
+            <span class="nav-text">მთავარი</span>
+        </a>
+    </li>
+    <li ui-sref-active="active">
+        <a ui-sref="app.category">
+            <span class="nav-icon"><i class="fa fa-list" aria-hidden="true"></i></span>
+            <span class="nav-text">კატეგორიები</span>
+        </a>
+    </li>
+    <!--<li ui-sref-active="active">
+        <a ui-sref="app.contact">
+            <span class="nav-icon"><i class="fa fa-phone" aria-hidden="true"></i></span>
+            <span class="nav-text">კონტაქტი</span>
+        </a>
+    </li>-->
+    <li ui-sref-active="active">
+        <a ui-sref="app.wines">
+            <span class="nav-icon"><i class="fa fa-list-ol" aria-hidden="true"></i></span>
+            <span class="nav-text">ღვინოები</span>
+        </a>
+    </li>
+    <li ui-sref-active="active">
+        <a ui-sref="app.shops">
+            <span class="nav-icon"><i class="fa fa-money" aria-hidden="true"></i></span>
+            <span class="nav-text">მაღაზიები</span>
+        </a>
+    </li>
+    <li ng-class="{active:$state.includes('app.user')}">
+        <a>
+            <span class="nav-caret">
+              <i class="fa fa-caret-down"></i>
+            </span>
+            <span class="nav-icon">
+                <i class="fa fa-users" aria-hidden="true"></i>
+            </span>
+            <span class="nav-text">მომხმარებელი</span>
+        </a>
+        <ul class="nav-sub">
+            <li ui-sref-active="active">
+                <a ui-sref="app.user.list"><span class="nav-text">მომხმარებლების სია</span></a>
+            </li>
+        </ul>
+    </li>
+</ul>

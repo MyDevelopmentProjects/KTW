@@ -1,0 +1,25 @@
+<svg width="463" height="18" viewBox="0 0 463 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<title>sep_bottom</title>
+<desc>Created using Figma</desc>
+<g id="Canvas" transform="translate(6906 -2969)">
+<g id="sep_bottom">
+<g id="Line 5">
+<use xlink:href="#path0_stroke" transform="matrix(1 2.44929e-16 2.44929e-16 -1 -6906 2970)"/>
+</g>
+<g id="Line 5">
+<use xlink:href="#path0_stroke" transform="matrix(1 2.44929e-16 2.44929e-16 -1 -6668 2970)"/>
+</g>
+<g id="Vector 2">
+<use xlink:href="#path1_stroke" transform="matrix(1 0 0 -1 -6681 2976)"/>
+</g>
+<g id="Line 6">
+<use xlink:href="#path2_stroke" transform="matrix(6.12323e-17 1 1 -6.12323e-17 -6674 2982)"/>
+</g>
+</g>
+</g>
+<defs>
+<path id="path0_stroke" d="M 0 0L 225 0L 225 -1L 0 -1L 0 0Z"/>
+<path id="path1_stroke" d="M 6.5 0L 6.83914 -0.367402L 6.5 -0.680454L 6.16086 -0.367402L 6.5 0ZM 0.33914 6.3674L 6.83914 0.367402L 6.16086 -0.367402L -0.33914 5.6326L 0.33914 6.3674ZM 6.16086 0.367402L 12.6609 6.3674L 13.3391 5.6326L 6.83914 -0.367402L 6.16086 0.367402Z"/>
+<path id="path2_stroke" d="M 0 0L 5 0L 5 -1L 0 -1L 0 0Z"/>
+</defs>
+</svg>

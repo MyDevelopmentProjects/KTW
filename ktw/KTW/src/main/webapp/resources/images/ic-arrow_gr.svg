@@ -1,0 +1,14 @@
+<svg width="30" height="19" viewBox="0 0 30 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<title>ic-arrow_gr</title>
+<desc>Created using Figma</desc>
+<g id="Canvas" transform="translate(-1772 -7648)">
+<g id="ic-arrow_gr">
+<g id="Vector 3">
+<use xlink:href="#path0_stroke" transform="matrix(-1 0 0 1 1800.5 7649)" fill="#DCDCDC"/>
+</g>
+</g>
+</g>
+<defs>
+<path id="path0_stroke" d="M 0 8.5L -0.353553 8.14645L -0.707107 8.5L -0.353553 8.85355L 0 8.5ZM 8.14645 -0.353553L -0.353553 8.14645L 0.353553 8.85355L 8.85355 0.353553L 8.14645 -0.353553ZM -0.353553 8.85355L 8.14645 17.3536L 8.85355 16.6464L 0.353553 8.14645L -0.353553 8.85355ZM 0 9L 28.5 9L 28.5 8L 0 8L 0 9Z"/>
+</defs>
+</svg>
